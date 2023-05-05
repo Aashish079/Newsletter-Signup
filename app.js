@@ -37,16 +37,26 @@ app.post('/',(req, res)=>{
 
     const options = {
         method : "POST",
-        auth : "Aashish:e0254719446a5a5e953df8fe2045dc1b-us17"
+        auth : "Aashish:653f38367b4d27daf4ab3baa43933c28-us17"
     }
 
     const request = https.request(url, options,(response)=>{
+        if(response.statusCode === 200){
+            res.sendFile(__dirname + "/success.html");
+        }
+        else{
+            res.sendFile(__dirname + "/failure.html");
+        }
         response.on("data", (data)=>{
             console.log(JSON.parse(data));
         })
     })
     request.write(jsonData);
     request.end();
+})
+
+app.post('/failure',(req, res)=>{
+    res.sendFile(__dirname + "/signup.html");
 })
 
 
@@ -60,3 +70,6 @@ app.listen(PORT,()=>{
 
 // List id
 // 19fdd5e44f
+
+// To Check the registered Users:
+// https://us17.admin.mailchimp.com/lists/members/#p:1-s:25-sa:last_update_time-so:false
